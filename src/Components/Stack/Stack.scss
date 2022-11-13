@@ -1,0 +1,13 @@
+.stack-container {
+    // Take up all the space
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+
+    &:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: 0 .2rem .8rem rgba(0, 0, 0, 0.2);
+    }
+    
+}
+
