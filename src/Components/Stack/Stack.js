@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Control from "../Control/Control";
+import { dummyStackData } from "../../Data/StackData";
 
 import "./Stack.scss";
-
-const dummyStackData = [
-  {
-    id: 1,
-    front: "United States of America",
-    back: "Washington, D.C.",
-  },
-  {
-    id: 2,
-    front: "Canada",
-    back: "Ottawa",
-  },
-  {
-    id: 3,
-    front: "Japan",
-    back: "Tokyo",
-  },
-];
 
 const Stack = () => {
   const sLen = dummyStackData.length;
@@ -28,12 +11,37 @@ const Stack = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
+    console.log("useeffect triggered");
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [currentCard, isFlipped]);
+
+  // Reset isFlipped when currentCard changes
+  useEffect(() => {
     setIsFlipped(false);
   }, [currentCard]);
 
+  const handleKeyPress = (e) => {
+    // switch for keypresses
+    switch (e.key) {
+      case "n":
+        let rand = Math.floor(Math.random() * sLen);
+        setCurrentCard(rand);
+        break;
+      case "m":
+        setIsFlipped(!isFlipped);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="stack-container">
-      <h2> Stack Example with Dummy Data </h2>
+      <h2> Countries & Capitals </h2>
       <div className="card-container">
         <Card
           front={dummyStackData[currentCard].front}
@@ -42,14 +50,6 @@ const Stack = () => {
           setIsFlipped={setIsFlipped}
         />
       </div>
-
-      {/* {dummyStackData.map((card) => {
-        return (
-          <div key={card.id}>
-            <Card front={card.front} back={card.back} />
-          </div>
-        );
-      })} */}
       <Control setCurrentCard={setCurrentCard} sLen={sLen} />
     </div>
   );

@@ -19,7 +19,7 @@ const Card = (props) => {
           onClick={() => props.setIsFlipped(!props.isFlipped)}
         >
           <div className="card-front">
-            <h3>{props.front}</h3>
+            <h1>{props.front}</h1>
           </div>
         </div>
       )}
