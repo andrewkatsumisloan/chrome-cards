@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Control from "../Control/Control";
 
@@ -23,12 +23,24 @@ const dummyStackData = [
 ];
 
 const Stack = () => {
+  const sLen = dummyStackData.length;
+  const [currentCard, setCurrentCard] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  useEffect(() => {
+    setIsFlipped(false);
+  }, [currentCard]);
+
   return (
     <div className="stack-container">
       <h2> Stack Example with Dummy Data </h2>
-      {/* Render random card from dummyStackData */}
       <div className="card-container">
-        <Card front={dummyStackData[0].front} back={dummyStackData[0].back} />
+        <Card
+          front={dummyStackData[currentCard].front}
+          back={dummyStackData[currentCard].back}
+          isFlipped={isFlipped}
+          setIsFlipped={setIsFlipped}
+        />
       </div>
 
       {/* {dummyStackData.map((card) => {
@@ -38,7 +50,7 @@ const Stack = () => {
           </div>
         );
       })} */}
-      <Control />
+      <Control setCurrentCard={setCurrentCard} sLen={sLen} />
     </div>
   );
 };
